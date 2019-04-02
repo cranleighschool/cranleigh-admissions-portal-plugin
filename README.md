@@ -15,3 +15,4 @@ Chiefly it is the 'go-between' between the Admissions Portal (Laravel) and our w
 ## How do I use it? 
 ### Download Document Shortcode
 When you're writing your content in WordPress Admin, simply put the shortcode `[admissions-doc slug="prospectus"]`. Where the `slug` matches the slug in your admissions portal: eg: `https://admissions.cranleigh.org/documents/prospectus`. 
+
