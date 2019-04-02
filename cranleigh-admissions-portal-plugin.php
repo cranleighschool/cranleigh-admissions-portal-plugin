@@ -1,5 +1,5 @@
 <?php
-/*
+/**
 Plugin Name: Cranleigh Admissions Portal
 Plugin URI: https://github.com/cranleighschool/admissions-portal
 Description: Cranleigh Admissions Portal Plugin
@@ -7,7 +7,7 @@ Version: 1.0
 Author: fredbradley
 Author URI: https://www.cranleigh.org
 License: GPL2
-*/
+ */
 
 namespace FredBradley\CranleighAdmissionsPlugin;
 

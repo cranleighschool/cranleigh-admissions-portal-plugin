@@ -4,16 +4,16 @@ namespace FredBradley\CranleighAdmissionsPlugin;
 
 /**
  * Class Plugin
- *
  */
 class Plugin extends BaseController {
+
 
 	protected $plugin_name = 'cranleigh-admissions-portal-plugin';
 	/**
 	 * @var array
 	 */
 	private $shortcodes = [
-		Shortcodes\AdmissionsDoc::class
+		Shortcodes\AdmissionsDoc::class,
 	];
 
 	/**
@@ -22,14 +22,14 @@ class Plugin extends BaseController {
 	public function __construct() {
 
 		parent::__construct();
-		$this->runUpdateChecker( $this->plugin_name );
+		$this->run_update_checker( $this->plugin_name );
 	}
 
 
 	/**
 	 *
 	 */
-	public function setupPlugin() {
+	public function setup_plugin() {
 
 		new Settings();
 		$this->loadShortcodes();

@@ -6,31 +6,31 @@ use Puc_v4_Factory;
 
 /**
  * Class BaseController
- *
  */
 abstract class BaseController {
+
 
 	/**
 	 * @return mixed
 	 */
-	abstract public function setupPlugin();
+	abstract public function setup_plugin();
 
 	/**
 	 * BaseController constructor.
 	 */
 	public function __construct() {
 
-		$this->setupPlugin();
+		$this->setup_plugin();
 	}
 
 
 	/**
 	 * @param string $plugin_name
-	 * @param string $githubUserName
+	 * @param string $github_user_name
 	 */
-	public function runUpdateChecker( string $plugin_name, string $githubUserName = 'cranleighschool' ) {
+	public function run_update_checker( string $plugin_name, string $github_user_name = 'cranleighschool' ) {
 
-		return $this->update_check( $plugin_name, $githubUserName );
+		return $this->update_check( $plugin_name, $github_user_name );
 	}
 
 	/**
@@ -39,16 +39,16 @@ abstract class BaseController {
 	 */
 	private function update_check( string $plugin_name, string $user ) {
 
-		$updateChecker = Puc_v4_Factory::buildUpdateChecker(
+		$update_checker = Puc_v4_Factory::buildUpdateChecker(
 			'https://github.com/' . $user . '/' . $plugin_name . '/',
 			dirname( dirname( __FILE__ ) ) . '/' . $plugin_name . '.php',
 			$plugin_name
 		);
 
 		/* Add in option form for setting auth token*/
-		//$updateChecker->setAuthentication(GITHUB_AUTH_TOKEN);
+		//$update_checker->setAuthentication(GITHUB_AUTH_TOKEN);
 
-		$updateChecker->setBranch( 'master' );
+		$update_checker->setBranch( 'master' );
 	}
 
 }

@@ -2,6 +2,7 @@
 
 namespace FredBradley\CranleighAdmissionsPlugin\Shortcodes;
 
+use FredBradley\CranleighAdmissionsPlugin\Mappers\Document;
 use FredBradley\CranleighAdmissionsPlugin\Settings;
 
 /**
@@ -11,10 +12,11 @@ use FredBradley\CranleighAdmissionsPlugin\Settings;
  */
 class AdmissionsDoc extends ShortcodeController {
 
+
 	/**
 	 * @var string
 	 */
-	public $tag = "admissions_doc";
+	public $tag = 'admissions_doc';
 
 	/**
 	 * @var string
@@ -31,17 +33,20 @@ class AdmissionsDoc extends ShortcodeController {
 
 		$this->admissions_portal_uri = Settings::get( 'portal_uri' );
 
-		$a = shortcode_atts( [
-			'slug' => null,
-			'url'  => null,
-		], $atts );
+		$a = shortcode_atts(
+			[
+				'slug' => null,
+				'url'  => null,
+			],
+			$atts
+		);
 
-		if ( $a[ 'slug' ] === null && $a[ 'url' ] === null ) {
+		if ( null === $a['slug'] && null === $a['url'] ) {
 			return 'Error. You need to set a SLUG or URL';
-		} elseif ( $a[ 'url' ] !== null ) {
-			return $this->oembed( $a[ 'url' ] );
-		} elseif ( $a[ 'slug' ] !== null ) {
-			return $this->oembed( $a[ 'slug' ] );
+		} elseif ( null !== $a['url'] ) {
+			return $this->oembed( $a['url'] );
+		} elseif ( null !== $a['slug'] ) {
+			return $this->oembed( $a['slug'] );
 		}
 	}
 
@@ -53,28 +58,28 @@ class AdmissionsDoc extends ShortcodeController {
 	private function oembed( string $str ) {
 
 		if ( substr( $str, 0, 8 ) != 'https://' ) {
-			$str = $this->admissions_portal_uri . "documents/" . $str;
+			$str = $this->admissions_portal_uri . 'documents/' . $str;
 		}
 
-		if ( ! $data = @file_get_contents( $str . "/oembed.json" ) ) {
+		if ( ! $data = @file_get_contents( $str . '/oembed.json' ) ) {
 			$error = error_get_last();
 
-			return "<div class='alert alert-danger'><p>Could not find Admissions Document: <code>" . $str . "</code>.</p></div>";
+			return "<div class='alert alert-danger'><p>Could not find Admissions Document: <code>" . $str . '</code>.</p></div>';
 		} else {
-			$json = json_decode( $data );
+			$document = new Document( $data );
 
-			return $this->html( $json );
+			return $this->html( $document );
 		}
-
 
 	}
 
+
 	/**
-	 * @param $document
+	 * @param Document $document
 	 *
 	 * @return string
 	 */
-	private function html( $document ) {
+	private function html( Document $document ) {
 
 		ob_start();
 		?>
@@ -82,8 +87,8 @@ class AdmissionsDoc extends ShortcodeController {
 			<div class="row">
 				<div class="col-sm-4">
 					<div class="card-image">
-						<a href="<?php echo $document->showRoute; ?>" style="user-select: none;">
-							<img src="<?php echo $document->thumbnail; ?>" style="user-select: none;">
+						<a href="<?php echo $document->show_route; ?>">
+							<img src="<?php echo $document->thumbnail; ?>">
 						</a>
 					</div>
 				</div>
@@ -91,17 +96,17 @@ class AdmissionsDoc extends ShortcodeController {
 					<div class="card-text">
 
 						<h4>
-							<a href="<?php echo $document->showRoute; ?>" style="user-select: none;"><?php echo $document->title; ?></a>
+							<a href="<?php echo $document->show_route; ?>" style="user-select: none;"><?php echo $document->title; ?></a>
 						</h4>
 
 						<p><?php echo $document->description; ?></p>
 
-						<a class="btn btn-sm btn-primary" title="" href="<?php echo $document->showRoute; ?>" rel="nofollow" style="user-select: none;">
+						<a class="btn btn-sm btn-primary" title="" href="<?php echo $document->show_route; ?>" rel="nofollow" style="user-select: none;">
 							Download
-							<small>(<?php echo $document->fileSize; ?>)</small>
+							<small>(<?php echo $document->file_size; ?>)</small>
 						</a>
 						<?php if ( current_user_can( 'manage_options' ) ) { ?>
-							<a class="btn btn-sm btn-danger" href="<?php echo $document->adminEdit; ?>">Edit Download</a>
+							<a class="btn btn-sm btn-danger" href="<?php echo $document->admin_edit; ?>">Edit Download</a>
 						<?php } ?>
 					</div>
 				</div>

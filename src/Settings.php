@@ -16,6 +16,7 @@ namespace FredBradley\CranleighAdmissionsPlugin;
  */
 class Settings {
 
+
 	/**
 	 * Settings constructor.
 	 */
@@ -46,8 +47,13 @@ class Settings {
 	 */
 	function cranleigh_admissions_add_admin_menu() {
 
-		add_options_page( 'cranleigh_admissions_plugin', 'Admissions Portal', 'manage_options',
-			'cranleigh_admissions_plugin', [ $this, 'cranleigh_admissions_options_page' ] );
+		add_options_page(
+			'cranleigh_admissions_plugin',
+			'Admissions Portal',
+			'manage_options',
+			'cranleigh_admissions_plugin',
+			[ $this, 'cranleigh_admissions_options_page' ]
+		);
 
 	}
 
@@ -74,7 +80,6 @@ class Settings {
 			'cranleigh_admissions_pluginPage_section'
 		);
 
-
 	}
 
 	/**
@@ -89,10 +94,10 @@ class Settings {
 	function plugin_options_validate( array $input ): array {
 
 		// Check our textbox option field contains no HTML tags - if so strip them out
-		$input[ 'portal_uri' ] = wp_filter_nohtml_kses( $input[ 'portal_uri' ] );
+		$input['portal_uri'] = wp_filter_nohtml_kses( $input['portal_uri'] );
 
 		// Ensure that there is a trailing slash...
-		$input[ 'portal_uri' ] = trailingslashit( $input[ 'portal_uri' ] );
+		$input['portal_uri'] = trailingslashit( $input['portal_uri'] );
 
 		return $input; // return validated input
 	}
@@ -132,11 +137,11 @@ class Settings {
 				<p>This plugin adds a couple of features which link the website with the Cranleigh Schools' Admissions Portal.</p>
 				<p>Some setup is required below for the features to work.</p>
 
-				<?php
-				settings_fields( 'pluginPage' );
-				do_settings_sections( 'pluginPage' );
-				submit_button();
-				?>
+		<?php
+		settings_fields( 'pluginPage' );
+		do_settings_sections( 'pluginPage' );
+		submit_button();
+		?>
 
 			</form>
 		</div>

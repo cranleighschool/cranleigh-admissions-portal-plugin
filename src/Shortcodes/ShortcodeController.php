@@ -9,6 +9,7 @@ namespace FredBradley\CranleighAdmissionsPlugin\Shortcodes;
  */
 abstract class ShortcodeController {
 
+
 	/**
 	 * ShortcodeController constructor.
 	 */
@@ -27,7 +28,7 @@ abstract class ShortcodeController {
 	}
 
 	/**
-	 * @param      $atts
+	 * @param $atts
 	 * @param null $content
 	 *
 	 * @return mixed
