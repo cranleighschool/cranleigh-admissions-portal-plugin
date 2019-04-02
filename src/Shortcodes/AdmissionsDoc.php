@@ -61,7 +61,8 @@ class AdmissionsDoc extends ShortcodeController {
 			$str = $this->admissions_portal_uri . 'documents/' . $str;
 		}
 
-		if ( ! $data = @file_get_contents( $str . '/oembed.json' ) ) {
+		$data = @file_get_contents( $str . '/oembed.json' );
+		if ( false === $data ) {
 			$error = error_get_last();
 
 			return "<div class='alert alert-danger'><p>Could not find Admissions Document: <code>" . $str . '</code>.</p></div>';

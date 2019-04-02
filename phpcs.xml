@@ -329,7 +329,10 @@
 	<!-- Covers rule: Files containing template tags in wp-includes should have "-template"
 		 appended to the end of the name.
 		 https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/issues/642 -->
-	<!--<rule ref="WordPress.Files.FileName"/> FRB COMMENTED THIS OUT -->
+	<rule ref="WordPress.Files.FileName">
+<exclude name="WordPress.Files.FileName.InvalidClassFileName"  />
+		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
+	</rule>
 
 
 	<!--

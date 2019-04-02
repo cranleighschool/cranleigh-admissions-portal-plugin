@@ -16,6 +16,7 @@ namespace FredBradley\CranleighAdmissionsPlugin;
  */
 class Settings {
 
+	public static $menu_page = 'cranleigh_admissions_plugin';
 
 	/**
 	 * Settings constructor.
@@ -25,6 +26,9 @@ class Settings {
 		add_action( 'admin_menu', [ $this, 'cranleigh_admissions_add_admin_menu' ] );
 		add_action( 'admin_init', [ $this, 'cranleigh_admissions_settings_init' ] );
 
+	}
+	public static function options_page_uri() {
+		return admin_url( 'options-general.php?page=' . self::$menu_page );
 	}
 
 	/**
@@ -51,7 +55,7 @@ class Settings {
 			'cranleigh_admissions_plugin',
 			'Admissions Portal',
 			'manage_options',
-			'cranleigh_admissions_plugin',
+			self::$menu_page,
 			[ $this, 'cranleigh_admissions_options_page' ]
 		);
 
