@@ -1,0 +1,20 @@
+{
+  "name": "fredbradley/cranleigh-admissions-portal-pluglin",
+  "description": "A Wordpress Plugin that integrates with Cranleigh Schools Admisisons Portal",
+  "require": {
+	"yahnis-elsts/plugin-update-checker": "^4.2"
+  },
+  "license": "MIT",
+  "authors": [
+	{
+	  "name": "Fred Bradley",
+	  "email": "hello@fredbradley.media"
+	}
+  ],
+  "autoload": {
+	"psr-4": {
+	  "FredBradley\\CranleighAdmissionsPlugin\\": "src"
+	}
+  }
+}
+
