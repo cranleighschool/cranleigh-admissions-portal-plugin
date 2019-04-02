@@ -1,4 +1,4 @@
-<<?php
+<?php
 /*
 Plugin Name: Cranleigh Admissions Portal
 Plugin URI: https://github.com/cranleighschool/admissions-portal

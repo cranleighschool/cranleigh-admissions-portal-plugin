@@ -8,37 +8,43 @@ namespace FredBradley\CranleighAdmissionsPlugin;
  */
 class Plugin extends BaseController {
 
+	protected $plugin_name = 'cranleigh-admissions-portal-plugin';
 	/**
-	 * @var
+	 * @var array
 	 */
-	private $post_type;
+	private $shortcodes = [
+		Shortcodes\AdmissionsDoc::class
+	];
 
 	/**
 	 * Plugin constructor.
 	 */
 	public function __construct() {
+
 		parent::__construct();
-		$this->runUpdateChecker( 'cranleigh-admissions-portal-plugin' );
+		$this->runUpdateChecker( $this->plugin_name );
 	}
+
 
 	/**
 	 *
 	 */
 	public function setupPlugin() {
-		// TODO: Implement setupPlugin() method.
+
+		new Settings();
+		$this->loadShortcodes();
 
 	}
 
 	/**
-	 * @param string $post_type_key
-	 *
-	 * @return \FredBradley\CranleighCulturePlugin\CustomPostType
+	 * Quick method that loads all the shortcodes listed in the $shortcodes var above.
 	 */
-	private function createCustomPostType( string $post_type_key ) {
+	public function loadShortcodes() {
 
-		$this->post_type = new CustomPostType( $post_type_key );
-
-		return $this->post_type;
+		foreach ( $this->shortcodes as $shortcode ) {
+			new $shortcode;
+		}
 	}
+
 }
 
