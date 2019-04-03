@@ -19,6 +19,7 @@ class Plugin extends BaseController {
 	 */
 	private $shortcodes = [
 		Shortcodes\AdmissionsDoc::class,
+		Shortcodes\EntryPoints::class
 	];
 
 	/**

@@ -83,6 +83,13 @@ class Settings {
 			'pluginPage',
 			'cranleigh_admissions_pluginPage_section'
 		);
+		add_settings_field(
+			'api_token',
+			__( 'Api Token', 'cranleigh_admission'),
+			[$this, 'api_token_render'],
+			'pluginPage',
+			'cranleigh_admissions_pluginPage_section'
+		);
 
 	}
 
@@ -113,6 +120,13 @@ class Settings {
 
 		?>
 		<input type='url' name='cranleigh_admissions_settings[portal_uri]' value='<?php echo self::get( 'portal_uri' ); ?>'>
+		<?php
+
+	}
+	function api_token_render() {
+
+		?>
+		<input type='text' name='cranleigh_admissions_settings[api_token]' value='<?php echo self::get( 'api_token' ); ?>'>
 		<?php
 
 	}
