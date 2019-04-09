@@ -85,8 +85,8 @@ class Settings {
 		);
 		add_settings_field(
 			'api_token',
-			__( 'Api Token', 'cranleigh_admission'),
-			[$this, 'api_token_render'],
+			__( 'Api Token', 'cranleigh_admission' ),
+			[ $this, 'api_token_render' ],
 			'pluginPage',
 			'cranleigh_admissions_pluginPage_section'
 		);

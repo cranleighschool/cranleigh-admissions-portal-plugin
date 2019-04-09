@@ -24,21 +24,21 @@ class EntryPoints extends ShortcodeController {
 	/**
 	 * @var string
 	 */
-	public $api_version = "v1";
+	public $api_version = 'v1';
 	/**
 	 * @var string
 	 */
 	public $admissions_portal_uri;
 
-	public $image_path = "images/entrypoints";
+	public $image_path = 'images/entrypoints';
 
 	/**
 	 * @return string
 	 */
 	private function generateEntryPointsApiUri() {
 
-		$query = http_build_query( [ "api_token" => $this->api_token ] );
-		$uri   = $this->admissions_portal_uri . "api/" . $this->api_version . "/entry-points?" . $query;
+		$query = http_build_query( [ 'api_token' => $this->api_token ] );
+		$uri   = $this->admissions_portal_uri . 'api/' . $this->api_version . '/entry-points?' . $query;
 
 		return $uri;
 	}
@@ -49,10 +49,9 @@ class EntryPoints extends ShortcodeController {
 	 */
 	private function getResponse() {
 
-
 		$get = wp_remote_get( $this->generateEntryPointsApiUri() );
-		if ( $get[ 'headers' ][ 'content-type' ] !== "application/json" ) {
-			return new \WP_Error( "Not JSON", "Your Content Type Is Not JSON." );
+		if ( 'application/json' !== $get[ 'headers' ][ 'content-type' ] ) {
+			return new \WP_Error( 'Not JSON', 'Your Content Type Is Not JSON.' );
 		}
 
 		$body = wp_remote_retrieve_body( $get );
@@ -67,7 +66,7 @@ class EntryPoints extends ShortcodeController {
 	 */
 	private function getImage( $image_file_name ) {
 
-		return Settings::get( 'portal_uri' ) . trailingslashit($this->image_path) . $image_file_name;
+		return Settings::get( 'portal_uri' ) . trailingslashit( $this->image_path ) . $image_file_name;
 	}
 
 	/**
@@ -84,7 +83,7 @@ class EntryPoints extends ShortcodeController {
 		$response = $this->getResponse();
 
 		if ( is_wp_error( $response ) ) {
-			error_log( "Failed to connect to the Admissions Portal. Check Portal URI and API TOKEN" );
+			error_log( 'Failed to connect to the Admissions Portal. Check Portal URI and API TOKEN' );
 
 			return false;
 		} else {
@@ -110,7 +109,7 @@ class EntryPoints extends ShortcodeController {
 			<h3>Select an entry point for more information</h3>
 			<div class="row">
 				<?php
-				foreach ( $entry_points as $entry_point ):
+				foreach ( $entry_points as $entry_point ) :
 					?>
 
 					<div class="col-sm-3 col-xs-6">
