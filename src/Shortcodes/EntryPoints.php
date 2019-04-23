@@ -12,7 +12,6 @@ use FredBradley\CranleighAdmissionsPlugin\Settings;
  */
 class EntryPoints extends ShortcodeController {
 
-
 	/**
 	 * @var string
 	 */
@@ -30,6 +29,9 @@ class EntryPoints extends ShortcodeController {
 	 */
 	public $admissions_portal_uri;
 
+	/**
+	 * @var string
+	 */
 	public $image_path = 'images/entrypoints';
 
 	/**
@@ -43,25 +45,35 @@ class EntryPoints extends ShortcodeController {
 		return $uri;
 	}
 
-
 	/**
 	 * @return array|mixed|object|\WP_Error
 	 */
 	private function getResponse() {
 
-		$get = wp_remote_get( $this->generateEntryPointsApiUri() );
-		if ( 'application/json' !== $get[ 'headers' ][ 'content-type' ] ) {
-			return new \WP_Error( 'Not JSON', 'Your Content Type Is Not JSON.' );
+		$transient_name              = Settings::$transient_name;
+		$transient                   = get_transient( $transient_name );
+		$seconds_length_of_transient = WEEK_IN_SECONDS;
+
+		if ( false === $transient ) {
+
+			$remote = wp_remote_get( $this->generateEntryPointsApiUri() );
+			if ( 'application/json' !== $remote[ 'headers' ][ 'content-type' ] ) {
+				return new \WP_Error( 400, 'Your Content Type Is Not JSON.' );
+			}
+
+			$transient = wp_remote_retrieve_body( $remote );
+			set_transient( $transient_name, $transient, $seconds_length_of_transient );
+		} else {
+			echo 'using transient';
 		}
 
-		$body = wp_remote_retrieve_body( $get );
-
-		return json_decode( $body );
+		return json_decode( $transient );
 	}
 
 	/**
 	 * @param $image_file_name
 	 *
+	 * @deprecated 2019-04-23 We are now using blobs.
 	 * @return string
 	 */
 	private function getImage( $image_file_name ) {
@@ -82,19 +94,19 @@ class EntryPoints extends ShortcodeController {
 
 		$response = $this->getResponse();
 
+
 		if ( is_wp_error( $response ) ) {
 			error_log( 'Failed to connect to the Admissions Portal. Check Portal URI and API TOKEN' );
 
 			return false;
 		} else {
 
-			$entry_points = $this->getResponse();
+			$entry_points = $response;
 
 		}
 
 		return $this->html( $entry_points );
 	}
-
 
 	/**
 	 * @param array $entry_points
@@ -117,8 +129,8 @@ class EntryPoints extends ShortcodeController {
 						   href="<?php echo $entry_point->ahref; ?>">
 							<div class="card card-style-<?php echo $entry_point->cardStyle; ?>">
 								<div class="card-image">
-									<img src="<?php echo $this->getImage( $entry_point->image ); ?>"
-										 class="img-responsive" />
+									<img src="<?php echo $entry_point->imageBlob; ?>"
+									     class="img-responsive" />
 								</div>
 								<div class="card-title">
 									<h3 class="text-center"><?php echo $entry_point->title; ?></h3>
