@@ -3,7 +3,7 @@
 Plugin Name: Cranleigh Admissions Portal
 Plugin URI: https://github.com/cranleighschool/cranleigh-admissions-portal-plugin
 Description: Cranleigh Admissions Portal Plugin. The thing that bridges the gap between our websites and our portal.
-Version: 1.4
+Version: 1.5
 Author: fredbradley
 Author URI: https://www.cranleigh.org
 License: GPL2

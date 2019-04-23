@@ -29,7 +29,7 @@ class AdmissionsDoc extends ShortcodeController {
 	 *
 	 * @return string
 	 */
-	public function render( $atts, $content = null ) {
+	public function render( $atts, $content = null ): string {
 
 		$this->admissions_portal_uri = Settings::get( 'portal_uri' );
 
@@ -41,12 +41,12 @@ class AdmissionsDoc extends ShortcodeController {
 			$atts
 		);
 
-		if ( null === $a['slug'] && null === $a['url'] ) {
+		if ( null === $a[ 'slug' ] && null === $a[ 'url' ] ) {
 			return 'Error. You need to set a SLUG or URL';
-		} elseif ( null !== $a['url'] ) {
-			return $this->oembed( $a['url'] );
-		} elseif ( null !== $a['slug'] ) {
-			return $this->oembed( $a['slug'] );
+		} elseif ( null !== $a[ 'url' ] ) {
+			return $this->oembed( $a[ 'url' ] );
+		} elseif ( null !== $a[ 'slug' ] ) {
+			return $this->oembed( $a[ 'slug' ] );
 		}
 	}
 
@@ -55,23 +55,28 @@ class AdmissionsDoc extends ShortcodeController {
 	 *
 	 * @return string
 	 */
-	private function oembed( string $str ) {
+	private function oembed( string $str ): string {
 
-		if ( substr( $str, 0, 8 ) != 'https://' ) {
-			$str = $this->admissions_portal_uri . 'documents/' . $str;
+		$transient_name = 'admis_portal_doc_' . sanitize_title( $str );
+		$transient      = get_transient( $transient_name );
+
+		if ( false === $transient ) {
+			if ( substr( $str, 0, 8 ) != 'https://' ) {
+				$str = $this->admissions_portal_uri . 'documents/' . $str;
+			}
+
+			$data = @file_get_contents( $str . '/oembed.json' );
+			if ( false === $data ) {
+				$error = error_get_last();
+
+				return "<div class='alert alert-danger'><p>Could not find the Admissions Document: <code>" . $str . "</code>.</p></div>";
+			} else {
+				$transient = new Document( $data );
+				set_transient( $transient_name, $transient, WEEK_IN_SECONDS );
+			}
 		}
 
-		$data = @file_get_contents( $str . '/oembed.json' );
-		if ( false === $data ) {
-			$error = error_get_last();
-
-			return "<div class='alert alert-danger'><p>Could not find Admissions Document: <code>" . $str . '</code>.</p></div>';
-		} else {
-			$document = new Document( $data );
-
-			return $this->html( $document );
-		}
-
+		return $this->html( $transient );
 	}
 
 
@@ -80,7 +85,7 @@ class AdmissionsDoc extends ShortcodeController {
 	 *
 	 * @return string
 	 */
-	private function html( Document $document ) {
+	private function html( Document $document ): string {
 
 		ob_start();
 		?>
