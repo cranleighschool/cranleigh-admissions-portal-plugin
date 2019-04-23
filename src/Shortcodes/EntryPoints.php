@@ -63,8 +63,6 @@ class EntryPoints extends ShortcodeController {
 
 			$transient = wp_remote_retrieve_body( $remote );
 			set_transient( $transient_name, $transient, $seconds_length_of_transient );
-		} else {
-			echo 'using transient';
 		}
 
 		return json_decode( $transient );
