@@ -7,7 +7,7 @@ Version: 1.5
 Author: fredbradley
 Author URI: https://www.cranleigh.org
 License: GPL2
-*/
+ */
 
 namespace FredBradley\CranleighAdmissionsPlugin;
 

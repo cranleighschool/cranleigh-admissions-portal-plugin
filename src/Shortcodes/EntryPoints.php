@@ -57,7 +57,7 @@ class EntryPoints extends ShortcodeController {
 		if ( false === $transient ) {
 
 			$remote = wp_remote_get( $this->generateEntryPointsApiUri() );
-			if ( 'application/json' !== $remote[ 'headers' ][ 'content-type' ] ) {
+			if ( 'application/json' !== $remote['headers']['content-type'] ) {
 				return new \WP_Error( 400, 'Your Content Type Is Not JSON.' );
 			}
 
@@ -91,7 +91,6 @@ class EntryPoints extends ShortcodeController {
 		$this->api_token             = Settings::get( 'api_token' );
 
 		$response = $this->getResponse();
-
 
 		if ( is_wp_error( $response ) ) {
 			error_log( 'Failed to connect to the Admissions Portal. Check Portal URI and API TOKEN' );
@@ -128,7 +127,7 @@ class EntryPoints extends ShortcodeController {
 							<div class="card card-style-<?php echo $entry_point->cardStyle; ?>">
 								<div class="card-image">
 									<img src="<?php echo $entry_point->imageBlob; ?>"
-									     class="img-responsive" />
+										 class="img-responsive" />
 								</div>
 								<div class="card-title">
 									<h3 class="text-center"><?php echo $entry_point->title; ?></h3>

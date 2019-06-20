@@ -41,12 +41,12 @@ class AdmissionsDoc extends ShortcodeController {
 			$atts
 		);
 
-		if ( null === $a[ 'slug' ] && null === $a[ 'url' ] ) {
+		if ( null === $a['slug'] && null === $a['url'] ) {
 			return 'Error. You need to set a SLUG or URL';
-		} elseif ( null !== $a[ 'url' ] ) {
-			return $this->oembed( $a[ 'url' ] );
-		} elseif ( null !== $a[ 'slug' ] ) {
-			return $this->oembed( $a[ 'slug' ] );
+		} elseif ( null !== $a['url'] ) {
+			return $this->oembed( $a['url'] );
+		} elseif ( null !== $a['slug'] ) {
+			return $this->oembed( $a['slug'] );
 		}
 	}
 
@@ -69,7 +69,7 @@ class AdmissionsDoc extends ShortcodeController {
 			if ( false === $data ) {
 				$error = error_get_last();
 
-				return "<div class='alert alert-danger'><p>Could not find the Admissions Document: <code>" . $str . "</code>.</p></div>";
+				return "<div class='alert alert-danger'><p>Could not find the Admissions Document: <code>" . $str . '</code>.</p></div>';
 			} else {
 				$transient = new Document( $data );
 				set_transient( $transient_name, $transient, WEEK_IN_SECONDS );

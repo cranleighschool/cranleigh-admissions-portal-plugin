@@ -45,8 +45,9 @@ abstract class BaseController {
 			$plugin_name
 		);
 
-		/* Add in option form for setting auth token*/
-		//$update_checker->setAuthentication(GITHUB_AUTH_TOKEN);
+		/*
+		 Add in option form for setting auth token*/
+		// $update_checker->setAuthentication(GITHUB_AUTH_TOKEN);
 
 		$update_checker->setBranch( 'master' );
 	}

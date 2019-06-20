@@ -75,7 +75,7 @@ class Plugin extends BaseController {
 	public function load_shortcodes() {
 
 		foreach ( $this->shortcodes as $shortcode ) {
-			new $shortcode;
+			new $shortcode();
 		}
 	}
 

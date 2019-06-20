@@ -8,7 +8,6 @@
 
 namespace FredBradley\CranleighAdmissionsPlugin;
 
-
 /**
  * Class Settings
  *
@@ -16,7 +15,7 @@ namespace FredBradley\CranleighAdmissionsPlugin;
  */
 class Settings {
 
-	public static $menu_page = 'cranleigh_admissions_plugin';
+	public static $menu_page      = 'cranleigh_admissions_plugin';
 	public static $transient_name = 'admis_portal_entry_points';
 
 	/**
@@ -26,7 +25,7 @@ class Settings {
 
 		add_action( 'admin_menu', [ $this, 'cranleigh_admissions_add_admin_menu' ] );
 		add_action( 'admin_init', [ $this, 'cranleigh_admissions_settings_init' ] );
-		add_action('update_option_cranleigh_admissions_settings', [ $this, 'cranleigh_on_update'], 10, 2);
+		add_action( 'update_option_cranleigh_admissions_settings', [ $this, 'cranleigh_on_update' ], 10, 2 );
 
 	}
 	public static function options_page_uri() {
@@ -70,8 +69,8 @@ class Settings {
 	 * @param $oldvalue
 	 * @param $newvalue
 	 */
-	function cranleigh_on_update( $oldvalue, $newvalue) {
-		delete_transient(self::$transient_name);
+	function cranleigh_on_update( $oldvalue, $newvalue ) {
+		delete_transient( self::$transient_name );
 
 		// To refactor later... could set the transient here as well, instead of in the EntryPoints class. Just an idea.
 	}
