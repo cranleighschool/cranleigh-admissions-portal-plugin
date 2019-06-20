@@ -16,5 +16,4 @@ if ( ! defined( 'WPINC' ) ) {
 }
 require_once plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
 
-$plugin = new Plugin();
-
+$cranleigh_plugin = new Plugin();
