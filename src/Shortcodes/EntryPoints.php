@@ -57,6 +57,9 @@ class EntryPoints extends ShortcodeController {
 		if ( false === $transient ) {
 			try {
 				$remote = wp_remote_get($this->generateEntryPointsApiUri());
+				if (is_wp_error($remote)) {
+					return $remote;
+				}
 				if ('application/json' !== $remote['headers']['content-type']) {
 					return new \WP_Error(400, 'Your Content Type Is Not JSON.');
 				}
