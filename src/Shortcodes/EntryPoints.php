@@ -55,14 +55,17 @@ class EntryPoints extends ShortcodeController {
 		$seconds_length_of_transient = WEEK_IN_SECONDS;
 
 		if ( false === $transient ) {
+			try {
+				$remote = wp_remote_get($this->generateEntryPointsApiUri());
+				if ('application/json' !== $remote['headers']['content-type']) {
+					return new \WP_Error(400, 'Your Content Type Is Not JSON.');
+				}
 
-			$remote = wp_remote_get( $this->generateEntryPointsApiUri() );
-			if ( 'application/json' !== $remote['headers']['content-type'] ) {
-				return new \WP_Error( 400, 'Your Content Type Is Not JSON.' );
+				$transient = wp_remote_retrieve_body($remote);
+				set_transient($transient_name, $transient, $seconds_length_of_transient);
+			} catch (\Exception $e) {
+				return new \WP_Error(500, 'Admissions Portal Not Found');
 			}
-
-			$transient = wp_remote_retrieve_body( $remote );
-			set_transient( $transient_name, $transient, $seconds_length_of_transient );
 		}
 
 		return json_decode( $transient );
