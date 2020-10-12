@@ -137,7 +137,7 @@ class EntryPoints extends ShortcodeController {
 								</div>
 								<div class="card-title">
 									<h3 class="text-center"><?php echo $entry_point->title; ?></h3>
-									<h4 class="text-center">(<?php echo $entry_point->yearGroupModel->year_group->name; ?>)</h4>
+									<h4 class="text-center">(<?php echo $entry_point->yearGroupModel->name; ?>)</h4>
 								</div>
 							</div>
 						</a>
