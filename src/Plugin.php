@@ -56,16 +56,16 @@ class Plugin extends BaseController {
 			AdminNotice::create()->error( 'For Admissions Portal Plugin to work you need to set the Portal URI on the settings page!' )->show();
 
 			return false;
+		} else {
+			$head = wp_remote_head(Settings::get('portal_uri'));
+			if (is_wp_error($head)) {
+				AdminNotice::create()->error("Unable to connect to your <strong>Admissions Portal</strong>. Perhaps <a href='" . Settings::options_page_uri() . "'>double check your settings?</a><br /><br /><code>" . $head->get_error_message() . '</code>')->show();
+
+				return false;
+			}
+
+			return $head;
 		}
-		$head = wp_remote_head( Settings::get( 'portal_uri' ) );
-		if ( is_wp_error( $head ) ) {
-			AdminNotice::create()->error( "Unable to connect to your <strong>Admissions Portal</strong>. Perhaps <a href='" . Settings::options_page_uri() . "'>double check your settings?</a><br /><br /><code>" . $head->get_error_message() . '</code>' )->show();
-
-			return false;
-		}
-
-		return $head;
-
 	}
 
 
